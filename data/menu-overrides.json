@@ -1,0 +1,148 @@
+{
+  "items": {
+    "brg-krisbi": {
+      "id": "brg-krisbi",
+      "cat": "burgers",
+      "name": "Burger Crispy",
+      "nameAr": "برقر كرسبي",
+      "price": 350,
+      "desc": "Poulet croustillant, fromage, tomate, salade",
+      "badge": "Best Seller"
+    },
+    "piz-margh": {
+      "id": "piz-margh",
+      "cat": "pizza",
+      "name": "Margherita",
+      "nameAr": "بيتزا مارغاريتا",
+      "price": 1000,
+      "sizes": {
+        "M": 250,
+        "L": 1000,
+        "XL": 1400
+      },
+      "desc": ""
+    },
+    "jus-eau-grande": {
+      "id": "jus-eau-grande",
+      "cat": "jus",
+      "name": "Eau Minérale Grande",
+      "nameAr": "ماء معدني كبيرة",
+      "price": 50,
+      "desc": "ماء معدني"
+    },
+    "jus-eau-petite": {
+      "id": "jus-eau-petite",
+      "cat": "jus",
+      "name": "Eau Minérale Petite",
+      "nameAr": "ماء معدني صغيرة",
+      "price": 30,
+      "desc": "ماء معدني"
+    },
+    "jus-kahwa": {
+      "id": "jus-kahwa",
+      "cat": "jus",
+      "name": "Café",
+      "nameAr": "قهوة",
+      "price": 50,
+      "desc": "مشروبات ساخنة"
+    },
+    "jus-shay": {
+      "id": "jus-shay",
+      "cat": "jus",
+      "name": "Thé",
+      "nameAr": "شاي",
+      "price": 50,
+      "desc": "مشروبات ساخنة"
+    },
+    "jus-soda-033": {
+      "id": "jus-soda-033",
+      "cat": "jus",
+      "name": "Soda 0.33L",
+      "nameAr": "غازي 0.33",
+      "price": 60,
+      "desc": "مشروبات غازية وعصير"
+    },
+    "jus-soda-ala": {
+      "id": "jus-soda-ala",
+      "cat": "jus",
+      "name": "Soda 1L",
+      "nameAr": "مشروب 1L",
+      "price": 150,
+      "desc": "مشروبات غازية وعصير"
+    }
+  },
+  "newItems": [
+    {
+      "id": "jus-kahwa",
+      "cat": "jus",
+      "name": "Café",
+      "nameAr": "قهوة",
+      "price": 150,
+      "desc": "مشروبات ساخنة"
+    },
+    {
+      "id": "jus-shay",
+      "cat": "jus",
+      "name": "Thé",
+      "nameAr": "شاي",
+      "price": 150,
+      "desc": "مشروبات ساخنة"
+    },
+    {
+      "id": "jus-eau-grande",
+      "cat": "jus",
+      "name": "Eau Minérale Grande",
+      "nameAr": "ماء معدني كبيرة",
+      "price": 80,
+      "desc": "ماء معدني"
+    },
+    {
+      "id": "jus-eau-petite",
+      "cat": "jus",
+      "name": "Eau Minérale Petite",
+      "nameAr": "ماء معدني صغيرة",
+      "price": 60,
+      "desc": "ماء معدني"
+    },
+    {
+      "id": "jus-soda-ala",
+      "cat": "jus",
+      "name": "Soda Ala",
+      "nameAr": "مشروب آل",
+      "price": 150,
+      "desc": "مشروبات غازية وعصير"
+    },
+    {
+      "id": "jus-soda-033",
+      "cat": "jus",
+      "name": "Soda 0.33L",
+      "nameAr": "غازي 0.33",
+      "price": 150,
+      "desc": "مشروبات غازية وعصير"
+    },
+    {
+      "id": "jus-canette",
+      "cat": "jus",
+      "name": "Canette",
+      "nameAr": "كانات",
+      "price": 100,
+      "desc": "مشروبات غازية وعصير"
+    },
+    {
+      "id": "jus-ananas",
+      "cat": "jus",
+      "name": "Jus Ananas",
+      "nameAr": "عصير أناناس",
+      "price": 300,
+      "desc": ""
+    }
+  ],
+  "deletedIds": [],
+  "customCategories": [
+    {
+      "id": "jus",
+      "label": "Boissons",
+      "labelAr": "مشروبات"
+    }
+  ]
+}

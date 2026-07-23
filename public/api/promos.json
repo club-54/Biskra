@@ -1,0 +1,107 @@
+[
+  {
+    "code": "CLUB54-31192AC5",
+    "discount": 12,
+    "used": true,
+    "usedAt": "2026-07-21T09:59:54.274Z",
+    "createdAt": "2026-07-21T09:52:19.520Z"
+  },
+  {
+    "code": "CLUB54-FCBB5516",
+    "discount": 20,
+    "used": true,
+    "usedAt": "2026-07-21T10:21:09.552Z",
+    "createdAt": "2026-07-21T09:52:19.520Z"
+  },
+  {
+    "code": "CLUB54-E7E32091",
+    "discount": 25,
+    "used": true,
+    "usedAt": "2026-07-21T10:06:08.292Z",
+    "createdAt": "2026-07-21T09:52:19.520Z"
+  },
+  {
+    "code": "CLUB54-EBBCF198",
+    "discount": 21,
+    "used": true,
+    "usedAt": "2026-07-21T10:21:47.846Z",
+    "createdAt": "2026-07-21T09:52:19.520Z"
+  },
+  {
+    "code": "CLUB54-1478F2A2",
+    "discount": 15,
+    "used": true,
+    "usedAt": "2026-07-21T10:36:07.652Z",
+    "createdAt": "2026-07-21T09:52:19.520Z"
+  },
+  {
+    "code": "CLUB54-714C8296",
+    "discount": 20,
+    "used": true,
+    "usedAt": "2026-07-21T10:07:11.869Z",
+    "createdAt": "2026-07-21T09:52:19.520Z"
+  },
+  {
+    "code": "CLUB54-D0DCAEA3",
+    "discount": 24,
+    "used": true,
+    "usedAt": "2026-07-21T10:12:05.629Z",
+    "createdAt": "2026-07-21T09:52:19.520Z"
+  },
+  {
+    "code": "CLUB54-A00E7F26",
+    "discount": 17,
+    "used": false,
+    "usedAt": null,
+    "createdAt": "2026-07-21T09:52:19.520Z"
+  },
+  {
+    "code": "CLUB54-96703B50",
+    "discount": 18,
+    "used": false,
+    "usedAt": null,
+    "createdAt": "2026-07-21T09:52:19.520Z"
+  },
+  {
+    "code": "CLUB54-33761EB6",
+    "discount": 11,
+    "used": false,
+    "usedAt": null,
+    "createdAt": "2026-07-21T09:52:19.520Z"
+  },
+  {
+    "code": "CLUB54-9F3803F4",
+    "discount": 21,
+    "used": false,
+    "usedAt": null,
+    "createdAt": "2026-07-21T09:52:19.520Z"
+  },
+  {
+    "code": "CLUB54-1D3F820C",
+    "discount": 25,
+    "used": false,
+    "usedAt": null,
+    "createdAt": "2026-07-21T09:52:19.520Z"
+  },
+  {
+    "code": "CLUB54-39574FD4",
+    "discount": 22,
+    "used": false,
+    "usedAt": null,
+    "createdAt": "2026-07-21T09:52:19.520Z"
+  },
+  {
+    "code": "CLUB54-0BE4B40A",
+    "discount": 22,
+    "used": false,
+    "usedAt": null,
+    "createdAt": "2026-07-21T09:52:19.520Z"
+  },
+  {
+    "code": "CLUB54-21744EA7",
+    "discount": 17,
+    "used": false,
+    "usedAt": null,
+    "createdAt": "2026-07-21T09:52:19.520Z"
+  }
+]

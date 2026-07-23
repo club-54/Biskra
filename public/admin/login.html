@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Club 54 Food — Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --gold: #F4C430;
+      --green-dark: #071A0F;
+      --green-mid: #0D2E1C;
+      --green-border: rgba(244,196,48,.18);
+      --text: #e8e8e8;
+      --text-dim: #888;
+      --red: #e05252;
+      --radius: 8px;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--green-dark);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .card {
+      background: var(--green-mid);
+      border: 1px solid var(--green-border);
+      border-radius: 12px;
+      padding: 40px 36px;
+      width: 100%;
+      max-width: 380px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+    .logo img { height: 40px; }
+    .logo span {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--gold);
+      letter-spacing: .04em;
+    }
+    h1 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      text-align: center;
+    }
+    .subtitle {
+      font-size: 13px;
+      color: var(--text-dim);
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+    .input-wrap {
+      position: relative;
+    }
+    input[type="password"] {
+      width: 100%;
+      background: rgba(0,0,0,.3);
+      border: 1px solid var(--green-border);
+      color: var(--text);
+      padding: 11px 44px 11px 14px;
+      border-radius: var(--radius);
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      transition: .15s;
+    }
+    input[type="password"]:focus { border-color: var(--gold); }
+    .toggle-pw {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-dim);
+      cursor: pointer;
+      display: flex;
+      padding: 2px;
+      transition: .15s;
+    }
+    .toggle-pw:hover { color: var(--text); }
+    .btn-login {
+      width: 100%;
+      padding: 12px;
+      background: var(--gold);
+      color: var(--green-dark);
+      border: none;
+      border-radius: var(--radius);
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: .15s;
+      margin-top: 8px;
+      font-family: inherit;
+    }
+    .btn-login:hover { background: #ddb020; }
+    .btn-login:active { transform: scale(.98); }
+    .error-msg {
+      display: none;
+      background: rgba(224,82,82,.12);
+      border: 1px solid rgba(224,82,82,.3);
+      color: var(--red);
+      border-radius: var(--radius);
+      padding: 10px 14px;
+      font-size: 13px;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+    .error-msg.show { display: block; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">
+      <img src="https://res.cloudinary.com/rjse3x88/image/upload/v1784525005/club54/logo-nobg.png"
+           onerror="this.style.display='none'" alt="logo">
+      <span>Club 54 Food</span>
+    </div>
+    <h1>لوحة الإدارة</h1>
+    <p class="subtitle">أدخل كلمة السر للمتابعة</p>
+
+    <div class="error-msg" id="errorMsg">كلمة السر غير صحيحة</div>
+
+    <form id="loginForm">
+      <div class="form-group">
+        <label>كلمة السر</label>
+        <div class="input-wrap">
+          <input type="password" id="pwInput" placeholder="••••••••" autocomplete="current-password" autofocus>
+          <button type="button" class="toggle-pw" onclick="togglePw()" title="إظهار/إخفاء">
+            <svg id="eyeIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <button type="submit" class="btn-login">دخول</button>
+    </form>
+  </div>
+
+  <script>
+    // Show error if redirected with ?error=1
+    if (new URLSearchParams(location.search).get('error')) {
+      document.getElementById('errorMsg').classList.add('show');
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const pw = document.getElementById('pwInput').value;
+      const btn = e.target.querySelector('.btn-login');
+      btn.textContent = '...';
+      btn.disabled = true;
+      try {
+        const res = await fetch('/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password: pw })
+        });
+        if (res.ok) {
+          window.location.href = '/admin';
+        } else {
+          document.getElementById('errorMsg').classList.add('show');
+          document.getElementById('pwInput').value = '';
+          document.getElementById('pwInput').focus();
+        }
+      } catch {
+        document.getElementById('errorMsg').classList.add('show');
+      } finally {
+        btn.textContent = 'دخول';
+        btn.disabled = false;
+      }
+    });
+
+    function togglePw() {
+      const input = document.getElementById('pwInput');
+      const isHidden = input.type === 'password';
+      input.type = isHidden ? 'text' : 'password';
+      document.getElementById('eyeIcon').innerHTML = isHidden
+        ? `<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>`
+        : `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>`;
+    }
+  </script>
+</body>
+</html>
