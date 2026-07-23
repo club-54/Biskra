@@ -1,0 +1,8 @@
+[
+  {"id":"sup-frite","name":"Frite","nameAr":"فريت","price":150,"price2":200},
+  {"id":"sup-camembert","name":"Camembert","nameAr":"كاممبير","price":150},
+  {"id":"sup-cheddar","name":"Cheddar","nameAr":"شيدر","price":150},
+  {"id":"sup-gruyere","name":"Gruyère","nameAr":"غرويير","price":200},
+  {"id":"sup-motzarella","name":"Motzarella","nameAr":"موتزاريلا","price":150},
+  {"id":"sup-oeuf","name":"Oeuf","nameAr":"بيضة","price":50}
+]

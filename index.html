@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <base href="/Biskra/">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <title>CLUB 54 FOOD</title>
+    <meta name="description" content="CLUB 54 FOOD — built on Replit. Update this description to reflect the app." />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="CLUB 54 FOOD" />
+    <meta property="og:description" content="CLUB 54 FOOD — built on Replit. Update this description to reflect the app." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="CLUB 54 FOOD" />
+    <meta name="twitter:description" content="CLUB 54 FOOD — built on Replit. Update this description to reflect the app." />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script type="module" crossorigin src="assets/index-D2XI1Zs9.v2.js"></script>
+    <link rel="stylesheet" crossorigin href="assets/index-DjwJ19XD.css">
+  <style>
+    /* Hide broken menu item images */
+    img[src="undefined"] { display: none !important; }
+
+    /* ── SUPPLEMENTS: hide from main React menu, keep in DOM for cart clicks ── */
+    [data-testid="button-category-supplements"] { display: none !important; }
+    [data-testid^="card-menu-sup-"] {
+      position: fixed !important; top: -9999px !important; left: -9999px !important;
+      width: 1px !important; height: 1px !important; overflow: hidden !important;
+      pointer-events: none !important; visibility: hidden !important;
+    }
+
+    /* ── SUPPLEMENTS SECTION ─────────────────────────────────────────────── */
+    #supplements-section {
+      padding: 40px 20px 32px;
+      background: #050f05;
+      border-top: 1px solid rgba(244,196,48,0.12);
+    }
+    .sup-heading {
+      text-align: center; margin-bottom: 28px;
+    }
+    .sup-heading h2 {
+      font-family: 'Cairo', 'Inter', sans-serif;
+      font-size: 22px; font-weight: 800;
+      color: #F4C430; letter-spacing: .04em; margin-bottom: 4px;
+    }
+    .sup-heading p {
+      font-size: 12px; color: rgba(255,255,255,0.35);
+      font-family: 'Inter', sans-serif; letter-spacing: .08em;
+    }
+    .sup-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 12px; max-width: 700px; margin: 0 auto;
+    }
+    .sup-card {
+      background: rgba(13,46,28,0.85);
+      border: 1px solid rgba(244,196,48,0.18);
+      border-radius: 10px;
+      padding: 16px 14px 14px;
+      display: flex; flex-direction: column; align-items: center;
+      gap: 6px; text-align: center;
+      transition: border-color .2s;
+    }
+    .sup-card:hover { border-color: rgba(244,196,48,0.45); }
+    .sup-name {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px; font-weight: 700; color: #fff;
+    }
+    .sup-name-ar {
+      font-family: 'Cairo', 'Inter', sans-serif;
+      font-size: 13px; color: rgba(255,255,255,0.5);
+    }
+    .sup-price {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px; font-weight: 700; color: #F4C430;
+      background: rgba(244,196,48,0.1);
+      padding: 2px 10px; border-radius: 20px;
+      margin: 2px 0 4px;
+    }
+    .sup-add-btn {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(244,196,48,0.15);
+      border: 1.5px solid rgba(244,196,48,0.5);
+      color: #F4C430; font-size: 22px; line-height: 1;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background .15s, transform .12s;
+      font-family: 'Inter', sans-serif;
+    }
+    .sup-add-btn:hover { background: rgba(244,196,48,0.28); transform: scale(1.08); }
+    .sup-add-btn.added { background: rgba(74,222,128,0.2); border-color: #4ade80; color: #4ade80; font-size: 15px; }
+    @media (max-width: 480px) {
+      .sup-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    /* Hero video */
+    .hero-video-wrap {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .hero-video-wrap video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+    .hero-video-wrap video.loaded {
+      opacity: 1;
+    }
+    @keyframes spin-logo {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    /* ══ MENU LIST LAYOUT ═════════════════════════════════════════════ */
+
+    /* 1. Grid → single-column list */
+    #menu .grid {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 0 !important;
+    }
+
+    /* 2. Card → horizontal row */
+    [data-testid^="card-menu-"] {
+      flex-direction: row !important;
+      align-items: center !important;
+      background: transparent !important;
+      border: none !important;
+      border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+      border-radius: 0 !important;
+      padding: 18px 0 !important;
+      min-height: 0 !important;
+      overflow: visible !important;
+      gap: 0 !important;
+    }
+    [data-testid^="card-menu-"]:first-child {
+      border-top: 1px solid rgba(255,255,255,0.06) !important;
+    }
+
+    /* 3. Hide image */
+    [data-testid^="card-menu-"] .h-36 {
+      display: none !important;
+    }
+
+    /* 4. Content → left side fills available space */
+    [data-testid^="card-menu-"] .p-4 {
+      flex: 1 !important;
+      padding: 0 !important;
+      padding-right: 120px !important;
+      min-width: 0 !important;
+    }
+
+    /* 5. Names row */
+    [data-testid^="card-menu-"] .p-4 > div:first-child {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      align-items: center !important;
+      gap: 6px !important;
+    }
+
+    /* 6. French name */
+    [data-testid^="card-menu-"] h3 {
+      font-size: 15px !important;
+      font-weight: 600 !important;
+      color: #fff !important;
+      letter-spacing: 0 !important;
+    }
+
+    /* 7. Arabic name */
+    [data-testid^="card-menu-"] .p-4 > div:first-child > p {
+      font-size: 12px !important;
+      color: rgba(255,255,255,0.42) !important;
+      font-weight: 400 !important;
+    }
+
+    /* 8. Description */
+    [data-testid^="card-menu-"] .p-4 > p {
+      font-size: 11px !important;
+      color: rgba(255,255,255,0.36) !important;
+      margin-top: 4px !important;
+      line-height: 1.5 !important;
+    }
+
+    /* 9. Badge → moved inline via JS, styled as small pill */
+    [data-testid^="card-menu-"] .left-3 {
+      position: relative !important;
+      top: auto !important; left: auto !important;
+      display: inline-flex !important;
+      font-size: 7px !important;
+      padding: 2px 6px !important;
+      border-radius: 2px !important;
+      flex-shrink: 0 !important;
+      vertical-align: middle !important;
+    }
+
+    /* 10. Price → vertically centered, right side (before button) */
+    [data-testid^="card-menu-"] .right-3 {
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+      right: 52px !important;
+      background: transparent !important;
+      color: #F4C430 !important;
+      font-size: 14px !important;
+      font-weight: 700 !important;
+      padding: 0 !important;
+      border-radius: 0 !important;
+      white-space: nowrap !important;
+      letter-spacing: 0 !important;
+    }
+
+    /* 11. Add-to-cart → compact "+" square */
+    [data-testid^="button-add-"] {
+      position: absolute !important;
+      right: 0 !important;
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+      width: 36px !important;
+      height: 36px !important;
+      min-width: 0 !important;
+      padding: 0 !important;
+      border-radius: 4px !important;
+      margin: 0 !important;
+      font-size: 0 !important;
+      letter-spacing: 0 !important;
+      gap: 0 !important;
+    }
+    [data-testid^="button-add-"]::after {
+      content: "+" !important;
+      font-size: 22px !important;
+      font-weight: 300 !important;
+      display: block !important;
+      line-height: 1 !important;
+    }
+    [data-testid^="button-add-"] svg { display: none !important; }
+
+    /* Hide product images inside the cart */
+    .w-20.h-20.flex-shrink-0 { display: none !important; }
+
+    /* ── CLOSED TOAST ────────────────────────────────────────────────────── */
+    #closed-toast {
+      position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%);
+      background: #0d2e1c; color: #f4c430;
+      border: 1px solid rgba(244,196,48,0.45);
+      border-radius: 12px; padding: 14px 22px;
+      font-family: 'Cairo','Inter',sans-serif; font-size: 0.95rem; font-weight: 700;
+      text-align: center; white-space: nowrap; z-index: 999999;
+      pointer-events: none; line-height: 1.5;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+      opacity: 0; transition: opacity .25s;
+    }
+    #closed-toast.show { opacity: 1; }
+  </style>
+  <script>
+    // ── Opening-hours check (no overlay — menu always visible) ───────────────
+    window.__isOpen = (function () {
+      function getAlgeriaTime() {
+        var parts = new Intl.DateTimeFormat('en-US', {
+          timeZone: 'Africa/Algiers',
+          weekday: 'short', hour: 'numeric', minute: 'numeric', hour12: false
+        }).formatToParts(new Date());
+        var get = function (t) { return parts.find(function (p) { return p.type === t; }).value; };
+        var dayMap = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+        return { day: dayMap[get('weekday')], mins: parseInt(get('hour')) * 60 + parseInt(get('minute')) };
+      }
+      return function () {
+        var t = getAlgeriaTime();
+        var open = (t.day === 5) ? 16 * 60 : 11 * 60;
+        return t.mins >= open && t.mins < 23 * 60;
+      };
+    })();
+
+    // ── Closed toast helper ───────────────────────────────────────────────────
+    var __closedToastTimer = null;
+    window.__showClosedToast = function () {
+      var el = document.getElementById('closed-toast');
+      if (!el) {
+        el = document.createElement('div');
+        el.id = 'closed-toast';
+        el.innerHTML = '🔒 نحن مغلقون الآن<br><span style="font-size:.8rem;font-weight:400;color:rgba(255,255,255,.6)">الطلبات تُفتح تلقائياً عند بداية وقت العمل</span>';
+        document.body.appendChild(el);
+      }
+      clearTimeout(__closedToastTimer);
+      el.classList.add('show');
+      __closedToastTimer = setTimeout(function () { el.classList.remove('show'); }, 3500);
+    };
+    // ─────────────────────────────────────────────────────────────────────────
+  </script>
+  <script>
+    // Inject hero video once React mounts the hero section
+    const HERO_VIDEO = "https://res.cloudinary.com/rjse3x88/video/upload/v1784525009/club54/hero-video.mp4";
+
+    function injectHeroVideo() {
+      const btn = document.querySelector('[data-testid="link-hero-menu"]');
+      if (!btn) return false;
+
+      // Walk up to the <section>
+      let el = btn;
+      while (el && el.tagName !== 'SECTION') el = el.parentElement;
+      if (!el || el.querySelector('.hero-video-wrap')) return false;
+
+      // --- video ---
+      const wrap = document.createElement('div');
+      wrap.className = 'hero-video-wrap';
+
+      const video = document.createElement('video');
+      video.autoplay = true;
+      video.muted = true;
+      video.loop = true;
+      video.playsInline = true;
+      video.setAttribute('preload', 'auto');
+      video.addEventListener('canplay', () => {
+        video.classList.add('loaded');
+        if (window.__dismissPageLoader) window.__dismissPageLoader();
+      });
+      video.addEventListener('error', () => {
+        wrap.remove();
+        if (window.__dismissPageLoader) window.__dismissPageLoader();
+      });
+
+      const source = document.createElement('source');
+      source.src = HERO_VIDEO;
+      source.type = 'video/mp4';
+      video.appendChild(source);
+      wrap.appendChild(video);
+
+      el.insertBefore(wrap, el.firstChild);
+      return true;
+    }
+
+    function startObserver() {
+      const heroObserver = new MutationObserver(() => {
+        if (injectHeroVideo()) heroObserver.disconnect();
+      });
+      heroObserver.observe(document.body, { childList: true, subtree: true });
+    }
+
+    if (document.body) {
+      startObserver();
+    } else {
+      document.addEventListener('DOMContentLoaded', startObserver);
+    }
+  </script>
+  <script>
+    // ── Promo-code interceptor ────────────────────────────────────────────────
+    (function () {
+      let pendingDiscount      = null;
+      let promoApplied         = false;
+      let orderPlacedWithPromo = false;
+
+      function setReactInput(input, value) {
+        const setter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set;
+        setter.call(input, value);
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+
+      function showToast(msg) {
+        document.getElementById('p-toast')?.remove();
+        const t = document.createElement('div');
+        t.id = 'p-toast';
+        t.textContent = msg;
+        t.style.cssText = 'position:fixed;bottom:90px;left:50%;transform:translateX(-50%);' +
+          'background:#1c1c1c;color:#ef4444;border:1px solid #ef4444;padding:10px 20px;' +
+          'border-radius:6px;font-family:Inter,sans-serif;font-size:0.85rem;z-index:99999;' +
+          'white-space:nowrap;pointer-events:none;';
+        document.body.appendChild(t);
+        setTimeout(() => t.remove(), 4000);
+      }
+
+      // Single capture listener on document — no MutationObserver
+      document.addEventListener('click', async function (e) {
+        const btn = e.target.closest('[data-testid]');
+        if (!btn) return;
+
+        // ── button-submit-order ──────────────────────────────────────────────
+        if (btn.dataset.testid === 'button-submit-order') {
+          // Block order when restaurant is closed
+          if (!window.__isOpen()) {
+            e.stopImmediatePropagation();
+            e.preventDefault();
+            window.__showClosedToast();
+            return;
+          }
+          if (!promoApplied) return;
+          if (orderPlacedWithPromo) {
+            e.stopImmediatePropagation();
+            e.preventDefault();
+            showToast('هذا الخصم استُخدم — أدخل كود جديد للاستفادة من خصم آخر');
+          } else {
+            orderPlacedWithPromo = true;
+          }
+          return;
+        }
+
+        // ── button-apply-promo ───────────────────────────────────────────────
+        if (btn.dataset.testid === 'button-apply-promo') {
+          const input = document.querySelector('[data-testid="input-promo-code"]');
+          if (!input) return;
+          const code = input.value.trim().toUpperCase();
+
+          // Internal re-trigger (code already set to CLUB54) — let React handle it
+          if (!code || code === 'CLUB54') return;
+
+          e.stopImmediatePropagation();
+          e.preventDefault();
+
+          try {
+            const vRes  = await fetch('/api/promos/validate', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ code })
+            });
+            const vData = await vRes.json();
+
+            if (!vData.valid) {
+              showToast(vData.error || 'كود غير صالح');
+              return;
+            }
+
+            await fetch('/api/promos/redeem', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ code })
+            });
+
+            promoApplied         = true;
+            orderPlacedWithPromo = false;
+            pendingDiscount      = vData.discount;
+
+            // Feed 'CLUB54' into React, then let React process the click
+            setReactInput(input, 'CLUB54');
+            await new Promise(r => setTimeout(r, 50));
+            btn.click(); // React sees 'CLUB54' and applies 20% internally
+            await new Promise(r => setTimeout(r, 100));
+
+            // Patch the displayed % to the real discount
+            const target = vData.discount + '%';
+            document.querySelectorAll('span.text-green-400').forEach(span => {
+              if (/\d+%/.test(span.textContent))
+                span.textContent = span.textContent.replace(/\d+%/, target);
+            });
+          } catch { /* silent */ }
+        }
+      }, true); // capture phase
+    })();
+    // ─────────────────────────────────────────────────────────────────────────
+
+    // ── Menu list enrichment (DA+ price, inline badge) ───────────────────────
+    (function () {
+      var seen = new WeakSet();
+
+      function enrichCard(card) {
+        if (seen.has(card)) return;
+        seen.add(card);
+
+        // Append "DA+" to price element
+        var priceEl = card.querySelector('.right-3');
+        if (priceEl) {
+          var raw = priceEl.textContent.trim();
+          if (raw && !/DA/.test(raw)) priceEl.textContent = raw + ' DA+';
+        }
+
+        // Move badge inline into the names row
+        var badgeEl = card.querySelector('.left-3');
+        var namesDiv = card.querySelector('.p-4 > div:first-child');
+        if (badgeEl && namesDiv && !namesDiv.contains(badgeEl)) {
+          namesDiv.appendChild(badgeEl);
+        }
+      }
+
+      function enrichAll() {
+        document.querySelectorAll('[data-testid^="card-menu-"]').forEach(enrichCard);
+      }
+
+      var obs = new MutationObserver(enrichAll);
+      function start() {
+        obs.observe(document.body, { childList: true, subtree: true });
+        enrichAll();
+      }
+      if (document.body) start();
+      else document.addEventListener('DOMContentLoaded', start);
+    })();
+    // ─────────────────────────────────────────────────────────────────────────
+
+    // ── Delivery location fields injector ────────────────────────────────────
+    (function () {
+      var injected = false;
+
+      function getInputStyle(ref) {
+        var cs = window.getComputedStyle(ref);
+        return {
+          background:   cs.backgroundColor   || 'rgba(255,255,255,0.04)',
+          border:       cs.border            || '1px solid rgba(255,255,255,0.08)',
+          borderRadius: cs.borderRadius      || '6px',
+          color:        cs.color             || '#fff',
+          fontSize:     cs.fontSize          || '14px',
+          fontFamily:   cs.fontFamily        || 'Inter,sans-serif',
+          padding:      '12px 14px',
+        };
+      }
+
+      function applyStyle(el, s) {
+        Object.assign(el.style, {
+          background:   s.background,
+          border:       s.border,
+          borderRadius: s.borderRadius,
+          color:        s.color,
+          fontSize:     s.fontSize,
+          fontFamily:   s.fontFamily,
+          padding:      s.padding,
+          width:        '100%',
+          boxSizing:    'border-box',
+          outline:      'none',
+        });
+      }
+
+      function injectLocationFields() {
+        if (injected) return false;
+        var addressEl = document.querySelector('[data-testid="input-address"]');
+        if (!addressEl) return false;
+        var addressWrap = addressEl.closest('div');
+        if (!addressWrap || addressWrap.querySelector('[data-loc-injected]')) return false;
+        injected = true;
+
+        var s = getInputStyle(addressEl);
+
+        // ── GPS (read-only) + button ──────────────────────────────────────
+        var wrap2 = document.createElement('div');
+        wrap2.setAttribute('data-loc-injected', '2');
+        wrap2.style.cssText = 'position:relative;margin-top:10px;';
+
+        var lbl2 = document.createElement('label');
+        lbl2.textContent = 'موقعك الجغرافي';
+        Object.assign(lbl2.style, {
+          display:'block', marginBottom:'5px', fontSize:'12px',
+          color:'rgba(255,255,255,0.45)', fontFamily: s.fontFamily,
+          textAlign:'right', direction:'rtl',
+        });
+
+        var row = document.createElement('div');
+        row.style.cssText = 'display:flex;gap:8px;align-items:stretch;';
+
+        var inp2 = document.createElement('input');
+        inp2.type     = 'text';
+        inp2.id       = 'loc-gps';
+        inp2.readOnly = true;
+        inp2.placeholder = 'اضغط الزر لتحديد موقعك…';
+        inp2.setAttribute('dir', 'rtl');
+        applyStyle(inp2, s);
+        Object.assign(inp2.style, {
+          flex:'1', textAlign:'right', cursor:'default',
+          opacity:'0.75', background:'rgba(255,255,255,0.02)',
+        });
+
+        var iconPin = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-left:5px;flex-shrink:0"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>';
+        var iconSpinner = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-left:5px;flex-shrink:0;animation:spin-logo 1s linear infinite"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>';
+        var iconCheck  = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-left:5px;flex-shrink:0"><polyline points="20 6 9 17 4 12"/></svg>';
+
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.innerHTML = iconPin + ' تحديد موقعي';
+        Object.assign(btn.style, {
+          flexShrink:'0', padding:'0 14px',
+          display:'flex', alignItems:'center', justifyContent:'center',
+          background:'rgba(244,196,48,0.12)',
+          border:'1px solid rgba(244,196,48,0.35)',
+          borderRadius: s.borderRadius,
+          color:'#F4C430', fontSize:'13px', fontFamily: s.fontFamily,
+          cursor:'pointer', whiteSpace:'nowrap', lineHeight:'1',
+          transition:'background 0.2s',
+        });
+        btn.addEventListener('mouseover', () => btn.style.background = 'rgba(244,196,48,0.22)');
+        btn.addEventListener('mouseout',  () => btn.style.background = 'rgba(244,196,48,0.12)');
+
+        btn.addEventListener('click', function () {
+          if (!navigator.geolocation) {
+            inp2.value = 'الموقع غير متاح على هذا المتصفح';
+            return;
+          }
+          btn.innerHTML = iconSpinner + ' جاري التحديد…';
+          btn.disabled = true;
+          navigator.geolocation.getCurrentPosition(
+            function (pos) {
+              var lat = pos.coords.latitude.toFixed(6);
+              var lng = pos.coords.longitude.toFixed(6);
+              inp2.value = lat + ', ' + lng;
+              btn.innerHTML = iconCheck + ' تم التحديد';
+              btn.style.color = '#4ade80';
+              btn.style.borderColor = 'rgba(74,222,128,0.35)';
+              fetch('https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=' + lat + '&lon=' + lng)
+                .then(function(r){ return r.json(); })
+                .then(function(d){
+                  if (d && d.display_name) inp2.value = d.display_name;
+                })
+                .catch(function(){});
+            },
+            function () {
+              inp2.value = 'تعذّر تحديد الموقع';
+              btn.innerHTML = iconPin + ' تحديد موقعي';
+              btn.disabled = false;
+            },
+            { enableHighAccuracy: true, timeout: 10000 }
+          );
+        });
+
+        row.appendChild(inp2);
+        row.appendChild(btn);
+        wrap2.appendChild(lbl2);
+        wrap2.appendChild(row);
+
+        // Insert GPS block right after the address wrapper
+        addressWrap.insertAdjacentElement('afterend', wrap2);
+        return true;
+      }
+
+      var locObs = new MutationObserver(function () {
+        if (injectLocationFields()) locObs.disconnect();
+      });
+      function startLocObserver() {
+        locObs.observe(document.body, { childList: true, subtree: true });
+      }
+      if (document.body) startLocObserver();
+      else document.addEventListener('DOMContentLoaded', startLocObserver);
+    })();
+    // ─────────────────────────────────────────────────────────────────────────
+
+    // ── Drink upsell banner in cart ───────────────────────────────────────────
+    (function () {
+      var BANNER_ID = 'drink-upsell-banner';
+
+      function hasDrinkInCart() {
+        return !!document.querySelector('[data-testid^="button-decrease-jus-"]');
+      }
+
+      function injectBanner() {
+        // Find promo input to locate the promo section's parent container
+        var promoInput = document.querySelector('[data-testid="input-promo-code"]');
+        if (!promoInput) return false;
+
+        // Walk up to the flex gap-2 mb-5 container (direct parent of promo row)
+        var promoSection = promoInput.closest('[class*="px-7"]');
+        if (!promoSection) promoSection = promoInput.parentElement?.parentElement?.parentElement?.parentElement;
+        if (!promoSection) return false;
+
+        // Don't inject twice
+        if (document.getElementById(BANNER_ID)) return true;
+
+        // Hide immediately if drink already in cart
+        if (hasDrinkInCart()) return true;
+
+        var banner = document.createElement('div');
+        banner.id = BANNER_ID;
+        banner.style.cssText = [
+          'display:flex', 'align-items:center', 'gap:12px',
+          'margin:0 28px 16px', 'padding:12px 14px',
+          'background:rgba(10,60,30,0.7)',
+          'border:1px solid rgba(74,222,128,0.25)',
+          'border-radius:2px',
+          'font-family:\'Inter\',sans-serif',
+        ].join(';');
+
+        // Icon
+        var icon = document.createElement('span');
+        icon.style.cssText = 'flex-shrink:0;display:flex;align-items:center';
+        icon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><defs><filter id="neon-drink" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="1.2" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g filter="url(#neon-drink)" stroke="#39ff6a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="15" y1="1" x2="15" y2="11"/><path d="M5 7 L6.5 21 Q6.6 22 7.5 22 L16.5 22 Q17.4 22 17.5 21 L19 7 Z"/><line x1="5" y1="7" x2="19" y2="7"/></g></svg>';
+
+        // Text block
+        var textWrap = document.createElement('div');
+        textWrap.style.cssText = 'flex:1;min-width:0';
+
+        var title = document.createElement('p');
+        title.textContent = 'مخصكش مشروب؟';
+        title.style.cssText = [
+          'margin:0 0 2px', 'font-size:13px', 'font-weight:700',
+          'color:#fff', 'direction:rtl', 'font-family:\'Cairo\',\'Inter\',sans-serif',
+        ].join(';');
+
+        var sub = document.createElement('p');
+        sub.textContent = 'Pas de boisson dans votre commande';
+        sub.style.cssText = 'margin:0;font-size:10px;color:rgba(255,255,255,0.35)';
+
+        textWrap.appendChild(title);
+        textWrap.appendChild(sub);
+
+        // AJOUTER button
+        var btn = document.createElement('button');
+        btn.textContent = 'AJOUTER →';
+        btn.style.cssText = [
+          'flex-shrink:0', 'padding:8px 14px',
+          'background:rgba(74,222,128,0.15)',
+          'border:1px solid rgba(74,222,128,0.4)',
+          'border-radius:2px',
+          'color:#4ade80', 'font-size:11px', 'font-weight:700',
+          'letter-spacing:0.08em', 'cursor:pointer',
+          'transition:background 0.2s',
+          'font-family:\'Inter\',sans-serif',
+          'white-space:nowrap',
+        ].join(';');
+        btn.addEventListener('mouseover', function () { btn.style.background = 'rgba(74,222,128,0.25)'; });
+        btn.addEventListener('mouseout',  function () { btn.style.background = 'rgba(74,222,128,0.15)'; });
+
+        btn.addEventListener('click', function () {
+          // Close the cart
+          var closeBtn = document.querySelector('[data-testid="button-close-cart"]');
+          if (closeBtn) closeBtn.click();
+
+          // After cart closes, click the Boissons category button
+          setTimeout(function () {
+            var jusCat = document.querySelector('[data-testid="button-category-jus"]');
+            if (jusCat) {
+              jusCat.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+              jusCat.click();
+            }
+            // Also scroll menu section into view
+            var menuSection = document.getElementById('menu');
+            if (menuSection) menuSection.scrollIntoView({ behavior: 'smooth' });
+          }, 300);
+        });
+
+        banner.appendChild(icon);
+        banner.appendChild(textWrap);
+        banner.appendChild(btn);
+
+        promoSection.insertAdjacentElement('beforebegin', banner);
+        return true;
+      }
+
+      function updateBanner() {
+        var banner = document.getElementById(BANNER_ID);
+        if (hasDrinkInCart()) {
+          if (banner) banner.style.display = 'none';
+        } else {
+          if (banner) banner.style.display = 'flex';
+          else injectBanner();
+        }
+      }
+
+      var drinkObs = new MutationObserver(updateBanner);
+      function startDrinkObserver() {
+        drinkObs.observe(document.body, { childList: true, subtree: true });
+        updateBanner();
+      }
+      if (document.body) startDrinkObserver();
+      else document.addEventListener('DOMContentLoaded', startDrinkObserver);
+    })();
+    // ─────────────────────────────────────────────────────────────────────────
+
+    // ── Supplements section ───────────────────────────────────────────────────
+    (function () {
+      var _supsInjected = false;
+      var _supsData = null;
+
+      async function fetchSupplements() {
+        if (_supsData) return _supsData;
+        try { _supsData = await fetch('/api/supplements').then(r => r.json()); }
+        catch (e) { _supsData = []; }
+        return _supsData;
+      }
+
+      function formatPrice(s) {
+        return s.price2 ? (s.price + ' / ' + s.price2 + ' DA') : (s.price + ' DA');
+      }
+
+      // ── Get React's addToCart directly from the fiber tree ──────────────────
+      // The bundle uses: g.jsx(Qw.Provider,{value:{addToCart:h,...},children:t})
+      // memoizedProps.value.addToCart is the cart add function on the provider fiber.
+      var _addToCart = null;
+
+      function findAddToCart() {
+        if (_addToCart) return _addToCart;
+        // Start from any rendered add button and walk UP the fiber tree via .return
+        var seed = document.querySelector('[data-testid^="button-add-"]') ||
+                   document.getElementById('root');
+        if (!seed) return null;
+        var fk = Object.keys(seed).find(function(k) {
+          return k.startsWith('__reactFiber') || k.startsWith('__reactInternalInstance');
+        });
+        if (!fk) return null;
+        var fiber = seed[fk];
+        var steps = 0;
+        while (fiber && steps < 300) {
+          steps++;
+          var mp = fiber.memoizedProps;
+          if (mp && mp.value && typeof mp.value.addToCart === 'function') {
+            _addToCart = mp.value.addToCart;
+            return _addToCart;
+          }
+          fiber = fiber.return;
+        }
+        return null;
+      }
+
+      // Called from each supplement card's + button
+      // Signature: _supAddToCart(id, name, nameAr, price, price2OrNull, btnEl)
+      window._supAddToCart = function (id, name, nameAr, price, price2, el) {
+        var addToCart = findAddToCart();
+        if (!addToCart) {
+          // React not ready yet — retry once after short delay
+          setTimeout(function () { window._supAddToCart(id, name, nameAr, price, price2, el); }, 200);
+          return;
+        }
+        // Add to React cart directly — no hidden buttons, no category switching
+        addToCart({ id: id, name: name + (nameAr ? ' — ' + nameAr : ''), price: price, image: '' });
+        el.classList.add('added');
+        el.textContent = '✓';
+        setTimeout(function () { el.classList.remove('added'); el.textContent = '+'; }, 1200);
+      };
+
+      async function injectSupplementsSection() {
+        if (_supsInjected) return true;
+        var menuSection = document.getElementById('menu');
+        if (!menuSection) return false;
+        if (!document.querySelector('[data-testid^="card-menu-"]')) return false;
+
+        _supsInjected = true;
+
+        var sups = await fetchSupplements();
+        if (!sups.length) return true;
+
+        var section = document.createElement('section');
+        section.id = 'supplements-section';
+
+        var cards = sups.map(function (s) {
+          // Pass all item data directly into the onclick — no React DOM lookup needed
+          var n   = s.name.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+          var nar = (s.nameAr||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+          var p2  = s.price2 || 'null';
+          return '<div class="sup-card">' +
+            '<div class="sup-name">' + s.name + '</div>' +
+            (s.nameAr ? '<div class="sup-name-ar">' + s.nameAr + '</div>' : '') +
+            '<div class="sup-price">' + formatPrice(s) + '</div>' +
+            '<button class="sup-add-btn" onclick="window._supAddToCart(\'' + s.id + '\',\'' + n + '\',\'' + nar + '\',' + s.price + ',' + p2 + ',this)" aria-label="Ajouter ' + s.name + '">+</button>' +
+            '</div>';
+        }).join('');
+
+        section.innerHTML =
+          '<div class="sup-heading">' +
+            '<h2>Suppléments</h2>' +
+            '<p>إضافات — EXTRAS</p>' +
+          '</div>' +
+          '<div class="sup-grid">' + cards + '</div>';
+
+        menuSection.insertAdjacentElement('afterend', section);
+        return true;
+      }
+
+      var supObs = new MutationObserver(function () {
+        injectSupplementsSection().then(function (done) {
+          if (done) supObs.disconnect();
+        });
+      });
+      function startSupObs() {
+        supObs.observe(document.body, { childList: true, subtree: true });
+        injectSupplementsSection();
+      }
+      if (document.body) startSupObs();
+      else document.addEventListener('DOMContentLoaded', startSupObs);
+    })();
+    // ─────────────────────────────────────────────────────────────────────────
+
+    // ── "Continue Shopping" button below Passer la Commande ──────────────────
+    (function () {
+      var BTN_ID = 'continue-shopping-btn';
+
+      function injectContinueBtn() {
+        if (document.getElementById(BTN_ID)) return true;
+        var submitBtn = document.querySelector('[data-testid="button-submit-order"]');
+        if (!submitBtn) return false;
+
+        var btn = document.createElement('button');
+        btn.id   = BTN_ID;
+        btn.type = 'button';
+        btn.innerHTML =
+          '<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" ' +
+          'fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ' +
+          'style="margin-left:7px;vertical-align:middle;flex-shrink:0">' +
+          '<line x1="19" y1="12" x2="5" y2="12"/>' +
+          '<polyline points="12 19 5 12 12 5"/></svg>' +
+          '<span style="vertical-align:middle">متابعة التسوق &nbsp;—&nbsp; CONTINUE SHOPPING</span>';
+
+        btn.style.cssText = [
+          'display:flex', 'align-items:center', 'justify-content:center',
+          'width:100%', 'margin-top:10px', 'padding:13px 20px',
+          'background:transparent',
+          'border:1px solid rgba(244,196,48,0.28)',
+          'border-radius:6px',
+          'color:rgba(244,196,48,0.85)',
+          'font-size:13px', 'font-weight:600',
+          'font-family:\'Cairo\',\'Inter\',sans-serif',
+          'letter-spacing:0.02em',
+          'cursor:pointer',
+          'transition:background 0.18s, border-color 0.18s, color 0.18s',
+          'direction:rtl',
+        ].join(';');
+
+        btn.addEventListener('mouseover', function () {
+          btn.style.background    = 'rgba(244,196,48,0.08)';
+          btn.style.borderColor   = 'rgba(244,196,48,0.55)';
+          btn.style.color         = '#f4c430';
+        });
+        btn.addEventListener('mouseout', function () {
+          btn.style.background    = 'transparent';
+          btn.style.borderColor   = 'rgba(244,196,48,0.28)';
+          btn.style.color         = 'rgba(244,196,48,0.85)';
+        });
+
+        btn.addEventListener('click', function () {
+          var closeBtn = document.querySelector('[data-testid="button-close-cart"]');
+          if (closeBtn) closeBtn.click();
+        });
+
+        submitBtn.insertAdjacentElement('afterend', btn);
+        return true;
+      }
+
+      var csObs = new MutationObserver(injectContinueBtn);
+      function startCsObserver() {
+        csObs.observe(document.body, { childList: true, subtree: true });
+        injectContinueBtn();
+      }
+      if (document.body) startCsObserver();
+      else document.addEventListener('DOMContentLoaded', startCsObserver);
+    })();
+    // ─────────────────────────────────────────────────────────────────────────
+
+    // ── About-section background image override ───────────────────────────────
+    (function () {
+      function replaceAboutImg() {
+        var img = document.querySelector('img[alt="Club 54 Interior"]');
+        if (!img || img._aboutReplaced) return !!img;
+        img._aboutReplaced = true;
+        img.src = 'https://res.cloudinary.com/rjse3x88/image/upload/v1784662190/club54/about-bg.png';
+        return true;
+      }
+      var abObs = new MutationObserver(function () {
+        if (replaceAboutImg()) abObs.disconnect();
+      });
+      function startAboutObserver() {
+        abObs.observe(document.body, { childList: true, subtree: true });
+        replaceAboutImg();
+      }
+      if (document.body) startAboutObserver();
+      else document.addEventListener('DOMContentLoaded', startAboutObserver);
+    })();
+    // ─────────────────────────────────────────────────────────────────────────
+
+    // Hide broken menu item images (and their containers) via onerror
+    function attachImgErrorHandlers(root) {
+      (root || document).querySelectorAll('img').forEach(img => {
+        if (img._errorHandled) return;
+        img._errorHandled = true;
+        function hide() {
+          img.style.display = 'none';
+          // Also hide the immediate parent container (holds the image block)
+          const parent = img.parentElement;
+          if (parent && parent !== document.body) parent.style.display = 'none';
+        }
+        // If already broken (no src, empty src, or src="undefined")
+        if (!img.src || img.src === window.location.href || img.getAttribute('src') === 'undefined') {
+          hide(); return;
+        }
+        if (img.complete && img.naturalWidth === 0) { hide(); return; }
+        img.addEventListener('error', hide);
+      });
+    }
+    const imgObserver = new MutationObserver(() => attachImgErrorHandlers(document));
+    function startImgObserver() {
+      imgObserver.observe(document.body, { childList: true, subtree: true });
+      attachImgErrorHandlers(document);
+    }
+    if (document.body) startImgObserver();
+    else document.addEventListener('DOMContentLoaded', startImgObserver);
+  </script>
+  </head>
+  <body>
+    <!-- ── Phase 1: logo (immediate) ── Phase 2: video (as soon as browser plays) ── -->
+    <div id="page-loader" style="position:fixed;inset:0;z-index:99999;background:#050f05;overflow:hidden;transition:opacity 0.6s ease;">
+
+      <!-- Video starts loading immediately in the loader background -->
+      <video id="pl-video"
+        autoplay muted loop playsinline preload="auto"
+        style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 0.5s ease;"
+      ><source src="https://res.cloudinary.com/rjse3x88/video/upload/v1784525009/club54/hero-video.mp4" type="video/mp4"></video>
+
+      <!-- Dark overlay so logo stays readable over the video -->
+      <div id="pl-overlay" style="position:absolute;inset:0;background:rgba(5,15,5,0.55);opacity:0;transition:opacity 0.5s ease;"></div>
+
+      <!-- Logo — shown immediately, stays visible throughout -->
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;">
+        <img
+          src="https://res.cloudinary.com/rjse3x88/image/upload/v1784525005/club54/logo-nobg.png"
+          alt="Club 54 Food"
+          style="width:110px;height:110px;border-radius:50%;animation:spin-logo 1.4s linear infinite;filter:drop-shadow(0 0 24px rgba(244,196,48,0.8));"
+        />
+        <!-- Thin gold progress bar that animates to signal loading -->
+        <div style="width:90px;height:2px;background:rgba(244,196,48,0.15);border-radius:2px;overflow:hidden;">
+          <div id="pl-bar" style="height:100%;width:0%;background:#f4c430;border-radius:2px;transition:width 0.4s ease;"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        var loader  = document.getElementById('page-loader');
+        var video   = document.getElementById('pl-video');
+        var overlay = document.getElementById('pl-overlay');
+        var bar     = document.getElementById('pl-bar');
+        var dismissed = false;
+        var videoShown = false;
+
+        // ── Phase 2: show video as soon as browser starts playing (any frame) ──
+        function showVideo() {
+          if (videoShown) return;
+          videoShown = true;
+          video.style.opacity   = '1';
+          overlay.style.opacity = '1';
+          if (bar) bar.style.width = '100%';
+        }
+
+        // Trigger on first timeupdate (= at least one frame decoded & playing)
+        video.addEventListener('timeupdate', showVideo, { once: true });
+        // Also trigger on canplay as a slightly earlier fallback
+        video.addEventListener('canplay',    showVideo, { once: true });
+        // Animate bar during loading so something moves while video buffers
+        video.addEventListener('progress', function () {
+          if (bar && !videoShown) bar.style.width = '60%';
+        }, { once: true });
+
+        // ── Dismiss: called when React hero section is ready ──
+        window.__dismissPageLoader = function () {
+          if (dismissed || !loader) return;
+          dismissed = true;
+          loader.style.opacity = '0';
+          setTimeout(function () { loader && loader.remove(); loader = null; }, 650);
+        };
+
+        // Hard fallback — dismiss after 4 s no matter what
+        setTimeout(window.__dismissPageLoader, 4000);
+      })();
+    </script>
+
+    <div id="root"></div>
+  </body>
+</html>
